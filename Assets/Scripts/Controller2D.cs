@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
 
 public class Controller2D : RaycastController {
 
@@ -9,12 +10,17 @@ public class Controller2D : RaycastController {
 	[HideInInspector]
 	public Vector2 playerInput;
 
+	private GameObject firepoint;
+
+
 	public bool facingRight = true;
 
 
 	public override void Start() {
 		base.Start ();
 		collisions.faceDir = 1;
+		firepoint = transform.GetChild(0).gameObject;
+
 
 	}
 	public void Move(Vector2 moveAmount, bool standingOnPlatform) {
@@ -49,8 +55,11 @@ public class Controller2D : RaycastController {
 
 		// Assign the modified scale back to the transform
 		transform.localScale = scale;
+		if (Input.GetKey(KeyCode.W)) {
+			Debug.Log("Looking up");
+			firepoint.transform.rotation = Quaternion.Euler(90f, 0f, 0f); // Point upwards
+		}
 
-		GameObject firepoint = transform.GetChild(0).gameObject; // Assuming firepoint is the first child
 		firepoint.transform.rotation = Quaternion.Euler(0f, 0f, facingRight ? 0f : 180f);
 
 
