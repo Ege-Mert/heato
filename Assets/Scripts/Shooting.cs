@@ -19,7 +19,7 @@ public class PlayerShooting : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButton("Fire1") && heatMeterValue < maxHeatValue && !isCoolingDown)
+        if (Input.GetButtonDown("Fire1") && heatMeterValue < maxHeatValue && !isCoolingDown)
         {
             Shoot();
         }
