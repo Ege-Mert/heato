@@ -9,12 +9,14 @@ public class Controller2D : RaycastController {
 	[HideInInspector]
 	public Vector2 playerInput;
 
+	public bool facingRight = true;
+
+
 	public override void Start() {
 		base.Start ();
 		collisions.faceDir = 1;
 
 	}
-
 	public void Move(Vector2 moveAmount, bool standingOnPlatform) {
 		Move (moveAmount, Vector2.zero, standingOnPlatform);
 	}
@@ -31,6 +33,7 @@ public class Controller2D : RaycastController {
 		}
 
 		if (moveAmount.x != 0) {
+			facingRight = moveAmount.x > 0;
 			collisions.faceDir = (int)Mathf.Sign(moveAmount.x);
 		}
 
@@ -40,6 +43,16 @@ public class Controller2D : RaycastController {
 		}
 
 		transform.Translate (moveAmount);
+		// Store the localScale in a variable
+		Vector3 scale = transform.localScale;
+		scale.x = facingRight ? 1f : -1f;
+
+		// Assign the modified scale back to the transform
+		transform.localScale = scale;
+
+		GameObject firepoint = transform.GetChild(0).gameObject; // Assuming firepoint is the first child
+		firepoint.transform.rotation = Quaternion.Euler(0f, 0f, facingRight ? 0f : 180f);
+
 
 		if (standingOnPlatform) {
 			collisions.below = true;
