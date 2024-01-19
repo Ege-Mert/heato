@@ -14,21 +14,18 @@ public class EnemyBehavior : MonoBehaviour
     private float timeBtwShots;
     public float startTimeBtwShots;
 
-    public float detectionRadius; // Radius for detecting the player
+    public float detectionRadius;
 
     private bool isChasing = false;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         timeBtwShots = startTimeBtwShots;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Check if the player is within the detection radius
         if (Physics2D.OverlapCircle(transform.position, detectionRadius, LayerMask.GetMask("Player")))
         {
             isChasing = true;
@@ -65,7 +62,6 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
-    // OnDrawGizmosSelected is used to draw a gizmo in the scene view for visualizing the detection radius
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;

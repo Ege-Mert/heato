@@ -8,6 +8,9 @@ public class PlayerHealth : MonoBehaviour
     public int health;
 
     public HealthBar healthBar;
+    public GameManagerScpirt gameManager;
+
+    private bool isDead;
 
     void Start()
     {
@@ -18,7 +21,9 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage){
         health -= damage;
         healthBar.SetHealth(health);
-        if(health <= 0){
+        if(health <= 0 && !isDead){
+            isDead = true;
+            gameManager.gameOver();
             Destroy(gameObject);
         }
     }
