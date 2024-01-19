@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
+    public HeatingBar heatBar;
+
     public float heatMeterValue;
     public float maxHeatValue = 100f;
     public float defaultCoolingRate = 1f;
@@ -17,6 +19,9 @@ public class PlayerShooting : MonoBehaviour
     public Transform firePoint;
     public GameObject projectilePrefab;
 
+    void Start(){
+        heatBar.SetMaxHeat(maxHeatValue);
+    }
     void Update()
     {
         if (Input.GetButtonDown("Fire1") && heatMeterValue < maxHeatValue && !isCoolingDown)
@@ -43,6 +48,7 @@ public class PlayerShooting : MonoBehaviour
                 StartCooldown();
             }
         }
+        heatBar.SetHeat(heatMeterValue);
     }
 
     void Shoot()
